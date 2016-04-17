@@ -1,6 +1,6 @@
 About SimpleVideo
 ===
-一个不基于任何框架库并向后兼容IE678浏览器的轻量级视频组件，其在IE678浏览器中通过ember标签插入swf格式的视频，而在其它现代浏览器中则可通过插入video标签来播放通用的mp4格式的视频。
+一个不基于任何框架库并向后兼容IE678浏览器的轻量级视频组件，其在IE678浏览器中通过ember/object标签插入swf格式的视频，而在其它现代浏览器中则可通过插入video标签来播放通用的mp4格式的视频。
 
 Quick Start
 ===
@@ -9,7 +9,7 @@ Quick Start
 
 依赖
 ===
-+ [swfobject](https://code.google.com/p/swfobject)
++ [swfobject](https://github.com/swfobject/swfobject)
 
 使用
 ===
