@@ -46,3 +46,22 @@ Quick Start
 	SimpleVideo.prototype.EXPRESS_INSTALL_URL = 'expressInstall.swf';
 
 下面是组件的配置参数说明：
+
++ `target` - __必须__, 需要插入视频的dom元素
++ `width` - __必须__, 视频宽度（单位px）
++ `height` - __必须__, 视频高度（单位px）
++ `sources` - __必须__, 视频源数据：如果要兼容IE678浏览器，则必须传swf格式（FLV1编码）的视频路径；而其它现代浏览器，则需要传mp4格式（AVC1编码）的视频路径，由于经过测试，目前mp4基本兼容所有浏览器，所以组件只兼容mp4格式的视频。
++ `coverImage` - _可选_, 视频未开始播放封面
++ `hasCover` - _default: false_, 是否需要显示未开始播放的封面，与`coverImage`组合使用
++ `params` - _可选_, 用于指定现代浏览器中video标签的属性参数
+
+Creator
+===
+Yuny Chan
+
++ [GitHub：https://github.com/YunyChan](https://github.com/YunyChan)
++ [博客：http://yuny.me/](http://yuny.me/)
+
+License
+===
+Code and documentation copyright 2016 Yuny Chan. Code released under the [MIT license](https://github.com/YunyChan/SimpleVideo/blob/master/LICENSE).
