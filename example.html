@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>SimpleVideo Example</title>
+</head>
+<body>
+    <div id="video"></div>
+    <script src="res/SimpleVideo.js"></script>
+    <script>
+        // Set resources url:
+        //SimpleVideo.prototype.SWFOBJECT_URL = 'swfobject.min.js';
+        //SimpleVideo.prototype.EXPRESS_INSTALL_URL = 'expressInstall.swf';
+
+        var oVideo = new SimpleVideo({
+            target: document.getElementById('video'),
+            width: 400,
+            height: 400,
+            sources: {
+                mp4: 'test_video.mp4',
+                swf: 'test_video.swf'
+            },
+            coverImage: 'test_video.png',
+            hasCover: true,
+            params: {
+                controls: 'controls',
+                preload: 'preload',
+                autoplay: 'autoplay'
+            }
+        });
+    </script>
+</body>
+</html>
