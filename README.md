@@ -20,7 +20,7 @@ Quick Start
 然后通过创建SimpleVideo的实例并传入相应的参数来插入并使用组件
 
 	<div id="video"></div>
-	<script src="res/SimpleVideo.js"></script>
+	<script src="SimpleVideo.js"></script>
 	<script>
 		var oVideo = new SimpleVideo({
 			target: document.getElementById('video'),
