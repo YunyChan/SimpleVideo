@@ -1,8 +1,8 @@
-About SimpleVideo
+关于 SimpleVideo 组件
 ===
 一个不基于任何框架库并向后兼容IE678浏览器的轻量级视频组件，其在IE678浏览器中通过ember/object标签插入swf格式的视频，而在其它现代浏览器中则可通过插入video标签来播放通用的mp4格式的视频。
 
-Quick Start
+快速开始
 ===
 + 直接从上面下载
 + 克隆项目：git clone https://github.com/YunyChan/SimpleVideo.git
@@ -55,7 +55,7 @@ Quick Start
 + `hasCover` - _default: false_, 是否需要显示未开始播放的封面，与`coverImage`组合使用
 + `params` - _可选_, 用于指定现代浏览器中video标签的属性参数
 
-Creator
+作者
 ===
 Yuny Chan
 
