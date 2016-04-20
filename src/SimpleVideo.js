@@ -2,57 +2,47 @@
  * Created by yuny on 2016/4/17.
  */
 (function(oWin, oDoc){
-    // Helper
+
     var Helper = {
-        insertScript: fInsertScript,
-        listenEvent: fListenEvent,
-        getScriptPath: fGetScriptPath,
-        getPath: fGetPath
-    };
-
-    function fInsertScript(sSrc, fCallback){
-        var oScript = oDoc.createElement('script');
-        oDoc.documentElement.appendChild(oScript);
-        oScript.onload = function(){
-            fCallback && fCallback();
-        };
-        oScript.src = sSrc;
-    }
-
-    function fListenEvent(oDom, sEventName, fCallback, bUseCapture){
-        if(oWin.attachEvent){
-            oDom.attachEvent('on' + sEventName, function(){
-                var oEvent = oWin.event;
-                fCallback && fCallback(oEvent);
-            });
-        }else{
-            oDom.addEventListener(sEventName, fCallback, !!bUseCapture);
-        }
-    }
-
-    function fGetScriptPath(sScriptFileName){
-        var oReg = new RegExp(sScriptFileName + '(\.min|)\.js');
-        var oScripts = oDoc.getElementsByTagName("script");
-        for (var cnt = 0, length = oScripts.length; cnt < length; cnt++) {
-            var oScript = oScripts[cnt];
-            if (oScript.src.match(oReg)) {
-                return this.getPath(oScript.src);
+        insertScript: function (sSrc, fCallback){
+            var oScript = oDoc.createElement('script');
+            oDoc.documentElement.appendChild(oScript);
+            oScript.onload = function(){
+                fCallback && fCallback();
+            };
+            oScript.src = sSrc;
+        },
+        getScriptPath: function (sScriptFileName){
+            var oReg = new RegExp(sScriptFileName + '(\.min|)\.js');
+            var oScripts = oDoc.getElementsByTagName("script");
+            for (var cnt = 0, length = oScripts.length; cnt < length; cnt++) {
+                var oScript = oScripts[cnt];
+                if (oScript.src.match(oReg)) {
+                    return this.getPath(oScript.src);
+                }
+            }
+            return "";
+        },
+        getPath: function (sUrl){
+            return sUrl.split("/").slice(0, -1).join("/");
+        },
+        listenEvent: function (oDom, sEventName, fCallback, bUseCapture){
+            if(oWin.attachEvent){
+                oDom.attachEvent('on' + sEventName, function(){
+                    var oEvent = oWin.event;
+                    fCallback && fCallback(oEvent);
+                });
+            }else{
+                oDom.addEventListener(sEventName, fCallback, !!bUseCapture);
             }
         }
-        return "";
-    }
+    };
 
-    function fGetPath(sUrl){
-        return sUrl.split("/").slice(0, -1).join("/");
-    }
 
-    var sScriptPath = Helper.getScriptPath('SimpleVideo');
-
-    // SimpleVideo类
     var SimpleVideo = fConstructor;
     // 静态变量
-    SimpleVideo.prototype.SWFOBJECT_URL = sScriptPath + '/swfobject.min.js';
-    SimpleVideo.prototype.EXPRESS_INSTALL_URL = sScriptPath + '/expressInstall.swf';
+    SimpleVideo.prototype.SWFOBJECT_URL = Helper.getScriptPath('SimpleVideo') + '/swfobject.min.js';
+    SimpleVideo.prototype.EXPRESS_INSTALL_URL = Helper.getScriptPath('SimpleVideo') + '/expressInstall.swf';
     // 静态方法
     SimpleVideo.prototype.init = fInit;
     SimpleVideo.prototype.isLowVersionIE = fIsLowVersionIE;
