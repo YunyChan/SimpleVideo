@@ -6,10 +6,24 @@
     var Helper = {
         insertScript: function (sSrc, fCallback){
             var oScript = oDoc.createElement('script');
-            oDoc.documentElement.appendChild(oScript);
+            oDoc.body.appendChild(oScript);
             oScript.onload = function(){
                 fCallback && fCallback();
             };
+            // IE8-支持，IE9、10同时支持onload，IE11+仅支持onload
+            if(oScript.onreadystatechange !== undefined){
+                oScript.onreadystatechange = function(){
+                    if(!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete'){
+                        fCallback && fCallback();
+                    }
+                };
+            }else{
+                oScript.onload = function(){
+                    if(!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete'){
+                        fCallback && fCallback();
+                    }
+                };
+            }
             oScript.src = sSrc;
         },
         getScriptPath: function (sScriptFileName){
@@ -157,6 +171,7 @@
         this.video = document.createElement('video');
         this.videoDomID = 'video' + new Date().getTime();
         this.video.id = this.videoDomID;
+        this.video.className = 'w-video-source';
         this.video.src = this.sources.mp4;
         this.video.width = this.width;
         this.video.height = this.height;
@@ -180,7 +195,7 @@
             wmode: 'opaque'
         };
         var oAttributes = {
-
+            'class': 'w-video-source'
         };
         swfobject.embedSWF(this.sources.swf, this.videoDomID, this.width, this.height, 10, this.EXPRESS_INSTALL_URL, oFlashConf, oParams, oAttributes);
     }
