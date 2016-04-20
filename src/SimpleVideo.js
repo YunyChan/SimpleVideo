@@ -100,6 +100,7 @@
         var oTarget = this.target;
         oTarget.style.width = this.width + 'px';
         oTarget.style.height = this.height + 'px';
+        oTarget.className = 'w-video';
     }
 
     function fRender(){
@@ -110,7 +111,7 @@
     function fRenderCover(){
         if(this.hasCover){
             this.cover = oDoc.createElement('img');
-            this.cover.className = 'w-video-wrap-cover';
+            this.cover.className = 'w-video-cover';
             this.cover.src = this.coverImage;
             this.cover.width = this.width;
             this.cover.height = this.height;
@@ -122,6 +123,7 @@
         var that = this;
         this.btnPlay = oDoc.createElement('button');
         this.btnPlay.innerHTML = '播放';
+        this.btnPlay.className = 'w-video-btn-play';
         Helper.listenEvent(this.btnPlay, 'click', function(){
             that.onBtnPlayClick();
         });
@@ -140,6 +142,7 @@
         var that = this;
         this.btnStop = oDoc.createElement('button');
         this.btnStop.innerHTML = '停止';
+        this.btnPlay.className = 'w-video-btn-stop';
         Helper.listenEvent(this.btnStop, 'click', function(){
             that.onBtnStopClick();
         });
