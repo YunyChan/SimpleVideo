@@ -2,7 +2,7 @@
  * Created by yuny on 2016/4/17.
  */
 (function(oWin, oDoc){
-    // Assistant
+    // Helper
     var Helper = {
         insertScript: fInsertScript,
         listenEvent: fListenEvent,
@@ -54,8 +54,8 @@
     SimpleVideo.prototype.SWFOBJECT_URL = sScriptPath + '/swfobject.min.js';
     SimpleVideo.prototype.EXPRESS_INSTALL_URL = sScriptPath + '/expressInstall.swf';
     // 静态方法
+    SimpleVideo.prototype.init = fInit;
     SimpleVideo.prototype.isLowVersionIE = fIsLowVersionIE;
-    SimpleVideo.prototype.initVariables = fInitVariables;
     SimpleVideo.prototype.setWrapRect = fSetWrapRect;
     SimpleVideo.prototype.render = fRender;
     SimpleVideo.prototype.renderCover = fRenderCover;
@@ -69,8 +69,28 @@
     SimpleVideo.prototype.stop = fStop;
 
     function fConstructor(oConf){
+        oConf = oConf || {};
+        this.target = oConf.target;
+        this.width = oConf.width || 400;
+        this.height = oConf.height || 400;
+        this.sources = oConf.sources || [];
+        this.coverImage = oConf.coverImage || '';
+        this.hasCover = oConf.hasCover || false;
+        this.params = oConf.params || {};
+
+        this.cover = null; // 封面图片对象
+        this.video = null; // 视频对象
+        this.btnPlay = null; // 播放按钮对象
+        this.btnStop = null; // 停止按钮对象
+
+        this.videoDomID = null; // 视频domID
+        this.isPlay = false;
+
+        this.init();
+    }
+
+    function fInit(){
         var that = this;
-        this.initVariables(oConf);
         this.setWrapRect();
         if(this.isLowVersionIE()){
             Helper.insertScript(this.SWFOBJECT_URL, function(){
@@ -84,30 +104,6 @@
     function fIsLowVersionIE(){
         var sUA = navigator.userAgent;
         return /MSIE 6/.test(sUA) || /MSIE 7/.test(sUA) || /MSIE 8/.test(sUA);
-    }
-
-    function fInitVariables(oConf){
-        oConf = oConf || {};
-        if(oConf.target){
-            this.target = oConf.target;
-        }else{
-            throw new Error("You must pass the DOM of video to target!");
-        }
-
-        this.width = oConf.width;
-        this.height = oConf.height;
-        this.sources = oConf.sources || [];
-        this.coverImage = oConf.coverImage || '';
-        this.hasCover = oConf.hasCover || false;
-        this.params = oConf.params || {};
-
-        this.cover = null; // 封面图片对象
-        this.video = null; // 视频对象
-        this.btnPlay = null; // 播放按钮对象
-        this.btnStop = null; // 停止按钮对象
-
-        this.videoDomID = null; // 视频domID
-        this.isPlay = false;
     }
 
     function fSetWrapRect(){
@@ -220,10 +216,22 @@
         }
     }
 
-    // Insert to the global object for using.
-    if(!oWin.SimpleVideo){
-        oWin.SimpleVideo = SimpleVideo;
-    }else{
-        throw new Error("It's duplicate to defined 'SimpleVideo', please check the scripts which you has been imported!");
+
+    if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+        define(function() {
+            return SimpleVideo;
+        });
+    } else if (typeof module !== 'undefined' && module.exports) {
+        module.exports = function(oConf){
+            return new SimpleVideo(oConf);
+        };
+        module.exports.SimpleVideo = SimpleVideo;
+    } else {
+        if(!oWin.SimpleVideo){
+            oWin.SimpleVideo = SimpleVideo;
+        }else{
+            throw new Error("It's duplicate to defined 'SimpleVideo', please check the scripts which you has been imported!");
+        }
     }
+
 })(window, document);
