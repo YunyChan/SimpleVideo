@@ -7,9 +7,6 @@
         insertScript: function (sSrc, fCallback){
             var oScript = oDoc.createElement('script');
             oDoc.body.appendChild(oScript);
-            oScript.onload = function(){
-                fCallback && fCallback();
-            };
             // IE8-支持，IE9、10同时支持onload，IE11+仅支持onload
             if(oScript.onreadystatechange !== undefined){
                 oScript.onreadystatechange = function(){
