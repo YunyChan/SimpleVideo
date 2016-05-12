@@ -93,6 +93,7 @@
         this.isPlay = false;
 
         this.init();
+        return this;
     }
 
     function fInit(){
@@ -217,6 +218,7 @@
         }else{
             this.renderNormalVideo();
         }
+        return this;
     }
 
     function fStop(){
@@ -231,6 +233,7 @@
             this.btnPlay.style.display = 'block';
             this.isPlay = false;
         }
+        return this;
     }
 
 
