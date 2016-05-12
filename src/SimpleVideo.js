@@ -49,7 +49,6 @@
         }
     };
 
-
     var SimpleVideo = fConstructor;
     // 静态变量
     SimpleVideo.prototype.SWFOBJECT_URL = Helper.getScriptPath('SimpleVideo') + '/swfobject.min.js';
@@ -59,6 +58,7 @@
     SimpleVideo.prototype.isLowVersionIE = fIsLowVersionIE;
     SimpleVideo.prototype.setWrapRect = fSetWrapRect;
     SimpleVideo.prototype.render = fRender;
+    SimpleVideo.prototype.onAfterRender = fOnAfterRender;
     SimpleVideo.prototype.renderCover = fRenderCover;
     SimpleVideo.prototype.renderBtnPlay = fRenderBtnPlay;
     SimpleVideo.prototype.onBtnPlayClick = fOnBtnPlayClick;
@@ -76,7 +76,8 @@
         this.height = oConf.height || 400;
         this.sources = oConf.sources || [];
         this.coverImage = oConf.coverImage || '';
-        this.hasCover = oConf.hasCover || false;
+        this.hasCover = oConf.hasCover;
+        this.autoPlay = oConf.autoPlay;
         this.params = oConf.params || {};
 
         this.cover = null; // 封面图片对象
@@ -117,6 +118,13 @@
     function fRender(){
         this.renderCover();
         this.renderBtnPlay();
+        this.onAfterRender();
+    }
+
+    function fOnAfterRender(){
+        if(this.autoPlay){
+            this.onBtnPlayClick();
+        }
     }
 
     function fRenderCover(){
