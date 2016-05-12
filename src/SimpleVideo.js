@@ -78,7 +78,11 @@
         this.coverImage = oConf.coverImage || '';
         this.hasCover = oConf.hasCover;
         this.autoPlay = oConf.autoPlay;
-        this.params = oConf.params || {};
+        this.params = oConf.params || {
+                controls: 'controls',
+                preload: 'preload',
+                autoplay: 'autoplay'
+            };
 
         this.cover = null; // 封面图片对象
         this.video = null; // 视频对象
@@ -94,7 +98,7 @@
     function fInit(){
         var that = this;
         this.setWrapRect();
-        if(this.isLowVersionIE()){
+        if(this.isLowVersionIE() && this.sources.swf){
             Helper.insertScript(this.SWFOBJECT_URL, function(){
                 that.render();
             });
